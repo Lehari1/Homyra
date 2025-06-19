@@ -20,25 +20,7 @@ router.get('/host/:host_id', async (req, res) => {
   res.json(result.rows);
 });
 
-// GET /api/bookings?user_id=2
-router.get('/', async (req, res) => {
-  const { user_id } = req.query;
 
-  try {
-    const result = await pool.query(`
-      SELECT b.*, l.title, l.image, l.location 
-      FROM bookings b
-      JOIN listings l ON b.listing_id = l.id
-      WHERE b.user_id = $1
-      ORDER BY b.check_in DESC
-    `, [user_id]);
-
-    res.json(result.rows);
-  } catch (err) {
-    console.error("Error fetching bookings:", err);
-    res.status(500).json({ message: "Error retrieving bookings" });
-  }
-});
 // GET /api/listings/search?location=&checkIn=&checkOut=&guests=
 router.get('/search', async (req, res) => {
   const { location, checkIn, checkOut } = req.query;

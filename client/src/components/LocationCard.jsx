@@ -1,7 +1,7 @@
 // src/components/LocationCard.jsx
 import React from 'react';
 
-export default function LocationCard({ location }) {
+export default function LocationCard({ location, onBook }) {
   return (
     <div className="bg-white rounded shadow p-4 flex flex-col justify-between">
       <img
@@ -11,7 +11,10 @@ export default function LocationCard({ location }) {
       />
       <h3 className="text-xl font-semibold">{location.title}</h3>
       <p className="text-gray-600 mb-3">{location.price}</p>
-      <button className="mt-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+      <button
+        onClick={onBook}
+        className="mt-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition"
+      >
         Book Now
       </button>
     </div>

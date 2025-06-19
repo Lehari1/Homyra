@@ -1,11 +1,11 @@
 // src/pages/Dashboard.jsx
 import React from 'react';
 import SearchBar from '../components/SearchBar';
-import { listings, destinations } from '../data/SampleListings';
-
-
+import { listings,listings2, destinations } from '../data/SampleListings';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 export default function Dashboard() {
-
+const navigate = useNavigate();
  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 console.log("📦 currentUser in Dashboard:", currentUser);
 const userName = currentUser?.user?.full_name || 'Guest';
@@ -25,8 +25,11 @@ const userName = currentUser?.user?.full_name || 'Guest';
       <h2 className="text-2xl font-semibold mt-10 mb-6">Explore Destinations</h2>
       <div className="flex justify-center gap-10">
         {destinations.map((d) => (
-          <div key={d.name} className="text-center">
-            <img src={d.image} alt={d.name} className="w-24 h-24 rounded-full object-cover mx-auto" />
+          <div key={d.name} 
+           onClick={() => navigate(`/destination/${d.name}`)}
+          className="text-center">
+            <img src={d.image} alt={d.name}
+             className="w-24 h-24 rounded-full object-cover mx-auto" />
             <p className="mt-2 font-medium">{d.name}</p>
           </div>
         ))}
@@ -41,7 +44,8 @@ const userName = currentUser?.user?.full_name || 'Guest';
             <div className="p-4 text-left">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">{listing.title}</h3>
-                <button className="bg-[#5847E9] text-white px-4 py-1 rounded-md text-sm">Book</button>
+                <button className="bg-[#5847E9] text-white px-4 py-1 rounded-md text-sm"
+                onClick={() => navigate(`/listing/${listing.id}`)}>Book</button>
               </div>
               <p className="text-gray-600">{listing.location}</p>
               <p className="font-semibold mt-1">{listing.price}</p>

@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Destinations />
+      <Destinations redirectToRegister />
     </>
   );
 }

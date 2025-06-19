@@ -11,6 +11,7 @@ import Logout from './pages/Logout';
 import AddListing from './pages/AddListing';
 import EditListing from './pages/EditListing';
 import ListingDetails from './pages/ListingDetails';
+import DestinationPage from './pages/DestinationPage';
 import SearchResults from './pages/SearchResults';
 import Bookings from './pages/BookingsPage';
 import OAuthSuccess from './pages/OAuthSuccess';
@@ -43,6 +44,7 @@ function App() {
           {/* Public route inside dashboard layout */}
           <Route path="/listing/:id" element={<ListingDetails />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/destination/:city" element={<DestinationPage />} />
         </Route>
       </Routes>
     </Router>

@@ -72,13 +72,11 @@ export default function HostDashboard() {
     }
   };
 
-  return (
+   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">🏡 Host Dashboard</h1>
-
-        <div className="flex justify-between items-center mb-8">
-          <p className="text-gray-600">Welcome back! Manage your listings here.</p>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">🏡 Host Dashboard</h1>
           <button
             onClick={() => navigate('/host/add')}
             className="bg-[#4F46E5] text-white px-4 py-2 rounded shadow hover:bg-indigo-600 transition"
@@ -87,38 +85,50 @@ export default function HostDashboard() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {listings.map((listing) => (
-            <div key={listing.id} className="bg-white border rounded-lg shadow hover:shadow-md transition">
-              <img src={listing.image} alt={listing.title} className="w-full h-48 object-cover rounded-t-lg" />
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-1">
-                  <h2 className="text-lg font-semibold text-gray-800">{listing.title}</h2>
-                  <span className="text-black font-semibold text-lg underline">₹{listing.price}</span>
-                </div>
-                <p className="text-gray-600 text-sm">{listing.location}</p>
-                <p className="text-sm text-gray-500 mt-2 h-12 overflow-hidden">{listing.description}</p>
-                <div className="mt-4 flex justify-between items-center">
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => navigate(`/host/edit/${listing.id}`)}
-                      className="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm hover:bg-blue-200 transition"
-                    >Edit</button>
-                    <button
-                      onClick={() => handleDelete(listing.id)}
-                      className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm hover:bg-red-200 transition"
-                    >
-                      Delete
+        {listings.length === 0 ? (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6 text-center mb-8">
+            <h3 className="text-xl font-semibold text-indigo-700">Welcome to your Host Dashboard</h3>
+            <p className="text-gray-600">Manage all your properties, bookings, and reviews in one place.</p>
+            <img
+              src="./manage.jpeg" 
+              alt="Dashboard Illustration"
+              className="mx-auto w-60 mt-4"
+            />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {listings.map((listing) => (
+              <div key={listing.id} className="bg-white border rounded-lg shadow hover:shadow-md transition">
+                <img src={listing.image} alt={listing.title} className="w-full h-48 object-cover rounded-t-lg" />
+                <div className="p-4">
+                  <div className="flex justify-between items-center mb-1">
+                    <h2 className="text-lg font-semibold text-gray-800">{listing.title}</h2>
+                    <span className="text-black font-semibold text-lg underline">₹{listing.price}</span>
+                  </div>
+                  <p className="text-gray-600 text-sm">{listing.location}</p>
+                  <p className="text-sm text-gray-500 mt-2 h-12 overflow-hidden">{listing.description}</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => navigate(`/host/edit/${listing.id}`)}
+                        className="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm hover:bg-blue-200 transition"
+                      >Edit</button>
+                      <button
+                        onClick={() => handleDelete(listing.id)}
+                        className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm hover:bg-red-200 transition"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    <button className="bg-[#4F46E5] text-white px-5 py-2 rounded text-sm font-semibold hover:bg-indigo-700">
+                      Book Now
                     </button>
                   </div>
-                  <button className="bg-[#4F46E5] text-white px-5 py-2 rounded text-sm font-semibold hover:bg-indigo-700">
-                    Book Now
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

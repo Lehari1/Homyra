@@ -4,6 +4,7 @@ import {
   FaWifi, FaBriefcase, FaTv, FaSnowflake, FaBath,
   FaDoorOpen, FaCut, FaCamera
 } from 'react-icons/fa';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const amenityIcons = {
   wifi: <FaWifi className="text-indigo-600" />,
