@@ -34,7 +34,7 @@ export default function AddListing() {
       available_to: form.availableTo
     };
 
-    const res = await fetch('http://localhost:5000/api/listings', {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

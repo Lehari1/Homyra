@@ -20,7 +20,7 @@ export default function EditListing() {
 
   // Fetch listing data to prefill
   useEffect(() => {
-    fetch(`http://localhost:5000/api/listings/${id}`)
+   fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/${id}`)
       .then(res => res.json())
       .then(data =>
         setListing({
@@ -48,7 +48,7 @@ export default function EditListing() {
       available_to: listing.available_to
     };
 
-    const res = await fetch(`http://localhost:5000/api/listings/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedListing)

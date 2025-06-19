@@ -23,7 +23,7 @@ export default function BookingPage() {
 
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/bookings?user_id=${userId}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings?user_id=${userId}`);
         const data = await res.json();
         setBookings(data);
       } catch (err) {

@@ -30,7 +30,7 @@ export default function HostDashboard() {
 
     const fetchListings = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/listings/host/${hostId}`);
+       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/host/${hostId}`);
         const data = await res.json();
         setListings(data);
       } catch (error) {
@@ -60,7 +60,7 @@ export default function HostDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this listing?")) {
       try {
-        const res = await fetch(`http://localhost:5000/api/listings/${id}`, {
+       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/${id}`, {
           method: 'DELETE',
         });
         if (res.ok) {

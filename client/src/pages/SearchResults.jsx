@@ -26,7 +26,7 @@ export default function SearchResults() {
  
   useEffect(() => {
     const fetchListings = async () => {
-      const res = await fetch(`http://localhost:5000/api/listings/search?location=${searchLocation}`);
+     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/search?location=${searchLocation}`);
       const data = await res.json();
       setResults(data);
     };

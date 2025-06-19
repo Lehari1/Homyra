@@ -26,9 +26,9 @@ export default function ListingDetails() {
 
   useEffect(() => {
     const fetchListing = async () => {
-      const res = await fetch(`http://localhost:5000/api/listings/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listings/${id}`);
       const data = await res.json();
-      const hostRes = await fetch(`http://localhost:5000/api/users/${data.host_id}`);
+      const hostRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${data.host_id}`);
       const host = await hostRes.json();
       setListing({ ...data, host_name: host.full_name, host_email: host.email });
     };
@@ -68,7 +68,7 @@ export default function ListingDetails() {
       user_id: currentUser.user.id
     };
 
-    const res = await fetch('http://localhost:5000/api/bookings', {
+   const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(booking)
