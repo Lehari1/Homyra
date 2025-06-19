@@ -6,20 +6,20 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
 
-// Load env variables
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Passport config
 require('./routes/passport');
 
-// Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
 app.use(express.json());
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'yourSecretKey',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -37,20 +37,19 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 // Google OAuth Callback
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login', session: false }),
+  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login`, session: false }),
   (req, res) => {
     if (!req.user) {
-      return res.redirect('http://localhost:5173/login');
+      return res.redirect(`${process.env.FRONTEND_URL}/login`);
     }
 
     const token = jwt.sign(
       { id: req.user.id, email: req.user.email },
-      process.env.JWT_SECRET || 'fallbackSecret',
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    const redirectUrl = `http://localhost:5173/oauth-success?token=${token}&id=${req.user.id}&name=${encodeURIComponent(req.user.full_name)}&email=${req.user.email}`;
-    console.log('🔁 Redirecting with user:', req.user);
+    const redirectUrl = `${process.env.FRONTEND_URL}/oauth-success?token=${token}&id=${req.user.id}&name=${encodeURIComponent(req.user.full_name)}&email=${req.user.email}`;
     res.redirect(redirectUrl);
   }
 );
@@ -62,10 +61,11 @@ app.get('/dbtest', async (req, res) => {
     await pool.query('SELECT NOW()');
     res.json({ success: true });
   } catch (err) {
-    console.error('DB test failed:', err);
     res.status(500).json({ success: false });
   }
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
-
+app.listen(PORT, () => {
+  const baseUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+  console.log(`🚀 Server running on ${baseUrl}`);
+});

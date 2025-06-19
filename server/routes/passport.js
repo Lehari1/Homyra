@@ -12,14 +12,12 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:5000/auth/google/callback'
+  callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`
 },
 async (accessToken, refreshToken, profile, done) => {
   const email = profile.emails[0].value;
   const name = profile.displayName;
   const googleId = profile.id;
-
-  console.log('🌐 Google profile:', { email, name, googleId });
 
   let user = await pool.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
 
@@ -39,4 +37,3 @@ async (accessToken, refreshToken, profile, done) => {
 
   return done(null, user.rows[0]);
 }));
-module.exports = passport;
